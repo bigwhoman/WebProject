@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {Navigate, Outlet, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-function LoginForm(props) {
+function RegisterForm(props) {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -15,15 +15,12 @@ function LoginForm(props) {
             'User-Secret': password
         };
         try {
-            console.log('trying to login');
+            console.log('trying to register');
             await axios.get('https://api.chatengine.io/chats', {headers: authObject})
-            localStorage.setItem('username', username);
-            localStorage.setItem('password', password);
             setError('');
             window.location.reload();
         } catch (error) {
-            console.log(error.message);
-            setError('Invalid username or password');
+            setError(error.message);
             setTimeout(() => {
                 setError('');
             }, 3000);
@@ -46,13 +43,13 @@ function LoginForm(props) {
                     />
                     <div align={"center"}>
                         <button type={"submit"} className={"button"}>
-                            <span>Start Chatting</span>
+                            <span>Register User</span>
                         </button>
                         <button type={"button"} className={"button"} onClick={() => {
-                           navigate('/register');
+                            navigate('/login');
                         }}>
                             <span>
-                                Register
+                                Back to login
                             </span>
                         </button>
                     </div>
@@ -63,4 +60,4 @@ function LoginForm(props) {
     );
 }
 
-export default LoginForm;
+export default RegisterForm;
