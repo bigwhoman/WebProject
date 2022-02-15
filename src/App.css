@@ -281,12 +281,18 @@
     right: -20px;
     transition: 0.5s;
 }
-.button:hover span {
+.button:hover:enabled span {
     padding-right: 25px;
 }
-.button:hover span:after {
+.button:hover:enabled span:after {
     opacity: 1;
     right: 0;
+}
+.button:disabled,
+button[disabled]{
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
 }
 
 .error {
