@@ -1,27 +1,12 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
-try {
-    firebase.initializeApp({
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
-        apiKey: process.env.REACT_APP_API_KEY,
 
-        authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-
-        projectId: process.env.REACT_APP_PROJECT_ID,
-
-        storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-
-        messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-
-        appId: process.env.REACT_APP_APP_ID,
-    })
-} catch (e) {
-    console.log("-------firebase error------->", e);
-}
-export const fb = {
-    auth: firebase.auth(),
-    storage: firebase.storage(),
-    firestore: firebase.firestore()
-}
+export const authentication = firebase.initializeApp({
+    apiKey: "AIzaSyDEp4owuOaWFXbQSClhCukEV7OtopZFONg",
+    authDomain: "yumgram-b71ed.firebaseapp.com",
+    projectId: "yumgram-b71ed",
+    storageBucket: "yumgram-b71ed.appspot.com",
+    messagingSenderId: "949769257528",
+    appId: "1:949769257528:web:61870ad39c5b36a4c25ccd"
+}).auth();

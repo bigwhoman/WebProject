@@ -1,6 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import {Navigate, Outlet, useNavigate} from "react-router-dom";
+import { authentication } from '../service/firebase';
+import firebase from 'firebase/compat/app';
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+
+import google from '../assets/google.svg';
 
 function LoginForm(props) {
     const navigate = useNavigate();
@@ -10,13 +14,16 @@ function LoginForm(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const authObject = {
-            'Project-ID': '79c62e75-79e3-48c2-bc3a-a1e36e9d292d',
+            'Project-ID': '48976808-5efd-4187-ba29-b91b6909a58f',
             'User-Name': username,
-            'User-Secret': password
+            'User-Secret': password,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         };
+
         try {
             console.log('trying to login');
-            await axios.get('https://api.chatengine.io/chats', {headers: authObject})
+            await axios.get('https://api.chatengine.io/chats', { headers: authObject })
             localStorage.setItem('username', username);
             localStorage.setItem('password', password);
             setError('');
@@ -35,31 +42,36 @@ function LoginForm(props) {
                 <h1 className={"title"}>Web Chat Application</h1>
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}
-                           placeholder={"Username"}
-                           className={"input"}
-                           required
+                        placeholder={"Username"}
+                        className={"input"}
+                        required
                     />
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                           placeholder={"Password"}
-                           className={"input"}
-                           required
+                        placeholder={"Password"}
+                        className={"input"}
+                        required
                     />
                     <div align={"center"}>
                         <button type={"submit"} className={"button"}>
                             <span>Start Chatting</span>
                         </button>
                         <button type={"button"} className={"button"} onClick={() => {
-                           navigate('/register');
+                            navigate('/register');
                         }}>
                             <span>
                                 Register
                             </span>
                         </button>
+                        <button type="button" className="button" onClick={() => {
+                            authentication.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+                        }} style={{ justifyContent: "center", alignItems: "center" }}>
+                            <img src={google} alt="google" width="10%" /> Sign In With Google !
+                        </button>
                     </div>
                     <h2 className={"error"}>{error}</h2>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
